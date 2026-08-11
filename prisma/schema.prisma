@@ -1,0 +1,33 @@
+// Prisma Schema for SPILLA GOLD Analysis Engine
+// Manages authentication, user accounts, roles, and status
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  ACTIVE
+  PENDING
+  SUSPENDED
+}
+
+model User {
+  id          String   @id @default(uuid())
+  fullName    String
+  email       String   @unique
+  password    String
+  role        Role     @default(USER)
+  status      Status   @default(ACTIVE)
+  accountType String?  @default("Trader Individu")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
