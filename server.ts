@@ -30,66 +30,152 @@ import {
 
 async function startServer() {
   const app = express();
-  
-  // Ambil Port dari .env atau default ke 3000
+
+  // ============================================================
+  // SERVER CONFIGURATION
+  // ============================================================
+
+  // Railway menyediakan PORT melalui environment variable.
+  // Fallback 3000 digunakan ketika menjalankan aplikasi secara lokal.
   const PORT = Number(process.env.PORT) || 3000;
-  
-  // Konfigurasi Host: Gunakan 127.0.0.1 untuk Lokal
-  const HOST = process.env.HOST || '127.0.0.1';
 
-  // Middlewares
+  // Railway harus dapat mengakses server dari luar container.
+  // Jangan gunakan 127.0.0.1 untuk production.
+  const HOST = '0.0.0.0';
+
+  // ============================================================
+  // MIDDLEWARES
+  // ============================================================
+
   app.use(express.json({ limit: '10mb' }));
-  app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-  // Health check endpoint (Railway requirement)
+  app.use(
+    express.urlencoded({
+      extended: true,
+      limit: '10mb',
+    })
+  );
+
+  // ============================================================
+  // HEALTH CHECK
+  // ============================================================
+
+  // Railway menggunakan endpoint ini untuk memastikan
+  // aplikasi berhasil berjalan.
   app.use('/api/health', healthRouter);
 
-  // Authentication & Admin Management Endpoints
+  // ============================================================
+  // AUTHENTICATION & ADMIN
+  // ============================================================
+
   app.use('/api/auth', authRouter);
+
   app.use('/api/admin', adminRouter);
+
+  // ============================================================
+  // COPY TRADE
+  // ============================================================
+
   app.use('/api/copytrade', copytradeRouter);
 
-  // Core API Endpoints
+  // ============================================================
+  // CORE API ENDPOINTS
+  // ============================================================
+
   app.use('/api/dashboard', dashboardRouter);
+
   app.use('/api/fundamental', fundamentalRouter);
+
   app.use('/api/technical', technicalRouter);
+
   app.use('/api/sentiment', sentimentRouter);
+
   app.use('/api/risk', riskRouter);
+
   app.use('/api/recommendation', recommendationRouter);
+
   app.use('/api/ea', eaRouter);
+
   app.use('/api/mt5-data', eaRouter);
+
   app.use('/api/snapshot', snapshotRouter);
+
   app.use('/api/history', historyRouter);
+
   app.use('/api/news', newsRouter);
+
   app.use('/api/calendar', calendarRouter);
+
   app.use('/api/system', systemRouter);
 
-  // Additional Helper Endpoints
+  // ============================================================
+  // ADDITIONAL API ENDPOINTS
+  // ============================================================
+
   app.use('/api/market', marketRouter);
+
   app.use('/api/ai', aiRouter);
+
   app.use('/api/collectors', collectorsRouter);
+
   app.use('/api/settings', settingsRouter);
+
   app.use('/api/logs', logsRouter);
 
-  // Vite Middleware for Development / Static serving for Production
+  // ============================================================
+  // FRONTEND
+  // ============================================================
+
   if (process.env.NODE_ENV !== 'production') {
+    // Development mode:
+    // Jalankan Vite sebagai middleware.
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+      },
       appType: 'spa',
     });
+
     app.use(vite.middlewares);
   } else {
+    // Production mode:
+    // Gunakan hasil build Vite dari folder dist.
     const distPath = path.join(process.cwd(), 'dist');
+
     app.use(express.static(distPath));
+
+    // React SPA fallback.
     app.get('*', (req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
 
-  // Jalankan Server di IP 127.0.0.1
+  // ============================================================
+  // START SERVER
+  // ============================================================
+
   app.listen(PORT, HOST, () => {
-    console.log(`🚀 SPILLA GOLD Analysis Engine running on http://${HOST}:${PORT}`);
+    console.log(
+      `🚀 SPILLA GOLD Analysis Engine running on http://${HOST}:${PORT}`
+    );
+
+    console.log(
+      `🌐 Environment: ${process.env.NODE_ENV || 'development'}`
+    );
+
+    console.log(
+      `❤️ Health Check: http://${HOST}:${PORT}/api/health`
+    );
   });
 }
 
-startServer();
+// ============================================================
+// APPLICATION START
+// ============================================================
+
+startServer().catch((error) => {
+  console.error('❌ Failed to start SPILLA GOLD Analysis Engine:');
+  console.error(error);
+
+  process.exit(1);
+});
