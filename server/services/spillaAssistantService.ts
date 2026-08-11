@@ -34,17 +34,16 @@ BRAND IDENTIFICATION & MEDIA
 PILIHAN MASTER COPYTRADE DI PAGE MASTER AI
 Di platform kami tersedia pilihan Master CopyTrade berikut:
 
-1. ♾️ SPILLA INFINITY (PREMIUM MASTER COPY TRADE)
+1. 🥇 SPILLA SCOUT ($50, Bagi Hasil 70:30)
+2. 🥈 SPILLA ELITE ($100, Bagi Hasil 70:30)
+3. 🥉 SPILLA HUNTER ($250, Bagi Hasil 70:30)
+4. ⚡ SPILLA STRIKER ($500+, Bagi Hasil 70:30)
+5. ♾️ SPILLA INFINITY ($1,000+, Bagi Hasil 70:30, Premium Master Copy Trade)
    - Modal Minimum: $1,000
    - Bagi Hasil: 70% Investor : 30% Master
    - Akses: Lifetime (S&K)
-   - Keunggulan: Kapasitas modal mulai $1,000, Sistem Copy Trade otomatis, Akses lifetime, Investor menggunakan akun trading sendiri, Transaksi Master diikuti secara otomatis, Dipantau via platform copy trade.
+   - Keunggulan: Kapasitas modal mulai $1,000, Sistem Copy Trade otomatis, Akses lifetime, Investor menggunakan akun trading sendiri, Transaksi Master diikuti secara otomatis.
    - Link Follow: https://social.aimsxchange.com/portal/registration/subscription/82085/spilla123
-
-2. 🥇 SPILLA SCOUT ($50, Bagi Hasil 70:30)
-3. 🥈 SPILLA ELITE ($100, Bagi Hasil 70:30)
-4. 🥉 SPILLA HUNTER ($250, Bagi Hasil 70:30)
-5. ⚡ SPILLA STRIKER ($500+, Bagi Hasil 70:30)
 
 DISCLAIMER:
 Trading memiliki risiko. Profit tidak dijamin dan kerugian dapat terjadi. Hasil pada setiap akun dapat berbeda tergantung kondisi pasar, pengaturan copy trade, dan faktor lainnya.
