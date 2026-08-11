@@ -7,7 +7,8 @@ import {
   ShieldCheck,
   CheckCircle2,
   AlertCircle,
-  ExternalLink,
+  Hash,
+  Server,
 } from 'lucide-react';
 import spillaLogo from '../assets/images/spilla_gold_logo_1786418245382.jpg';
 
@@ -29,7 +30,9 @@ export const TraderLoginModal: React.FC<TraderLoginModalProps> = ({
   onClose,
 }) => {
   const [identifier, setIdentifier] = useState<string>('');
+  const [accountNumber, setAccountNumber] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [brokerServer, setBrokerServer] = useState<string>('AIMS-Live');
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -42,12 +45,22 @@ export const TraderLoginModal: React.FC<TraderLoginModalProps> = ({
     setSuccessMessage(null);
 
     if (!identifier.trim()) {
-      setErrorMessage('Silakan masukkan Email atau Username akun trader Anda.');
+      setErrorMessage('Silakan masukkan Username / Nama akun trader Anda.');
+      return;
+    }
+
+    if (!accountNumber.trim()) {
+      setErrorMessage('Silakan masukkan Nomor Akun Trader (MT5/MT4).');
       return;
     }
 
     if (!password.trim()) {
       setErrorMessage('Silakan masukkan Password akun trader Anda.');
+      return;
+    }
+
+    if (!brokerServer.trim()) {
+      setErrorMessage('Silakan masukkan Server Broker Anda.');
       return;
     }
 
@@ -61,7 +74,9 @@ export const TraderLoginModal: React.FC<TraderLoginModalProps> = ({
         },
         body: JSON.stringify({
           identifier: identifier.trim(),
+          accountNumber: accountNumber.trim(),
           password: password.trim(),
+          brokerServer: brokerServer.trim(),
           masterName: selectedMaster.name,
           redirectUrl: selectedMaster.ctaUrl,
         }),
@@ -78,7 +93,9 @@ export const TraderLoginModal: React.FC<TraderLoginModalProps> = ({
           window.open(targetUrl, '_blank', 'noopener,noreferrer');
           setLoading(false);
           setIdentifier('');
+          setAccountNumber('');
           setPassword('');
+          setBrokerServer('AIMS-Live');
           setSuccessMessage(null);
           onClose();
         }, 800);
@@ -168,29 +185,46 @@ export const TraderLoginModal: React.FC<TraderLoginModalProps> = ({
           )}
 
           {/* Login Form */}
-          <form onSubmit={handleSubmit} className="space-y-4 font-mono">
-            {/* Field 1: Email / Username */}
-            <div className="space-y-1.5">
+          <form onSubmit={handleSubmit} className="space-y-3.5 font-mono">
+            {/* Field 1: Username / Nama */}
+            <div className="space-y-1">
               <label className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-[#E5B842]" />
-                <span>Email / Username</span>
+                <span>Username / Nama</span>
               </label>
               <input
                 type="text"
                 required
-                placeholder="Masukkan email atau username trader"
+                placeholder="Masukkan username atau nama trader"
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
                 disabled={loading}
-                className="w-full bg-gray-900/90 border border-gray-700 focus:border-[#E5B842] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
+                className="w-full bg-gray-900/90 border border-gray-700 focus:border-[#E5B842] rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
               />
             </div>
 
-            {/* Field 2: Password */}
-            <div className="space-y-1.5">
+            {/* Field 2: Nomor Akun Trader */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Hash className="w-3.5 h-3.5 text-[#E5B842]" />
+                <span>Nomor Akun Trader (MT5/MT4)</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Contoh: 88201923"
+                value={accountNumber}
+                onChange={(e) => setAccountNumber(e.target.value)}
+                disabled={loading}
+                className="w-full bg-gray-900/90 border border-gray-700 focus:border-[#E5B842] rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
+              />
+            </div>
+
+            {/* Field 3: Password Akun Trader */}
+            <div className="space-y-1">
               <label className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
                 <Lock className="w-3.5 h-3.5 text-[#E5B842]" />
-                <span>Password</span>
+                <span>Password Akun Trader</span>
               </label>
               <input
                 type="password"
@@ -199,7 +233,24 @@ export const TraderLoginModal: React.FC<TraderLoginModalProps> = ({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading}
-                className="w-full bg-gray-900/90 border border-gray-700 focus:border-[#E5B842] rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
+                className="w-full bg-gray-900/90 border border-gray-700 focus:border-[#E5B842] rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
+              />
+            </div>
+
+            {/* Field 4: Server Broker */}
+            <div className="space-y-1">
+              <label className="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+                <Server className="w-3.5 h-3.5 text-[#E5B842]" />
+                <span>Server Broker</span>
+              </label>
+              <input
+                type="text"
+                required
+                placeholder="Contoh: AIMS-Live / AIMS-Server"
+                value={brokerServer}
+                onChange={(e) => setBrokerServer(e.target.value)}
+                disabled={loading}
+                className="w-full bg-gray-900/90 border border-gray-700 focus:border-[#E5B842] rounded-xl px-3.5 py-2 text-xs text-white placeholder-gray-500 focus:outline-none transition-colors"
               />
             </div>
 

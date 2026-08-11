@@ -31,6 +31,37 @@ export const FollowMasterAiView: React.FC = () => {
 
   const packages = [
     {
+      id: 'infinity',
+      name: 'SPILLA INFINITY',
+      badge: 'PREMIUM MASTER COPY TRADE',
+      accentColor: 'border-yellow-400/80 text-yellow-300 bg-yellow-950/40',
+      badgeColor: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/60 font-black',
+      headerGradient: 'from-amber-900/60 via-yellow-950/40 to-transparent',
+      ctaColor: 'bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 hover:brightness-110 text-black font-black shadow-amber-500/30 border border-yellow-200',
+      tagline: 'Infinite Potential • Premium Strategy',
+      description:
+        'SPILLA INFINITY merupakan salah satu Master CT SPILLA GOLD yang diperuntukkan bagi investor dengan kapasitas modal lebih besar dan ingin mengikuti strategi trading melalui sistem Copy Trade.',
+      minDeposit: '$1,000',
+      accessFee: 'Gratis Akses (S&K)',
+      profitShare: '70% Investor : 30% Master',
+      accessType: 'Lifetime (S&K)',
+      suitableFor: [
+        'Kapasitas modal besar ($1,000+)',
+        'Investor institusional & profesional',
+        'Sistem Copy Trade otomatis',
+        'Eksekusi & monitoring real-time',
+      ],
+      advantages: [
+        'Kapasitas modal mulai $1,000',
+        'Sistem Copy Trade',
+        'Akses lifetime (S&K)',
+        'Investor menggunakan akun trading sendiri',
+        'Transaksi Master dapat diikuti secara otomatis',
+        'Dapat dipantau melalui platform copy trade',
+      ],
+      ctaUrl: 'https://social.aimsxchange.com/portal/registration/subscription/82085/spilla123',
+    },
+    {
       id: 'scout',
       name: 'SPILLA SCOUT',
       badge: 'STARTER COPY TRADE',

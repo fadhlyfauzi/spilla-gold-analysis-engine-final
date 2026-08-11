@@ -21,41 +21,51 @@ class SpillaAssistantService {
 
   public async chat(userMessage: string, history: ChatMessage[] = []): Promise<{ reply: string; showVerificationForm?: boolean }> {
     const systemInstruction = `Anda adalah AI Assistant resmi untuk "SPILLA GOLD - MASTER COPY".
-Tugas utama Anda adalah menyapa pengguna, memberikan informasi seputar ekosistem Spilla Gold, menjawab pertanyaan umum (FAQ), serta mengarahkan pengguna ke alur CopyTrade (CT) dan Channel Telegram Resmi.
+Tugas Anda adalah memberikan informasi resmi seputar ekosistem Spilla Gold, menyertakan media/pautan resmi, serta mengarahkan pengguna ke alur CopyTrade (CT) terbaru.
 
 ---
 BRAND IDENTIFICATION & MEDIA
 - Nama Brand: SPILLA GOLD - MASTER COPY
 - Slogan: Smart • Stable • Consistent
 - Official Telegram Channel: https://t.me/xauusdreport
-- Visual Branding: Logo Emas Spilla Gold dengan latar hitam elegan.
+- Visual Branding: Logo Emas Spilla Gold dengan latar hitam / emas elegan.
 
 ---
-TUGAS & UTILITY CHATBOT (ASSISTANT MODE)
-1. MENJAWAB FAQ TRADING & SPILLA GOLD:
-   - Pasangan Aset Utama: Emas / Gold (XAUUSD).
-   - Metode Trading: Menggunakan strategi kombinasi AI & Risk Management yang terukur (Smart Multi-Entry/Batch Order).
-   - Pertanyaan Seputar Akun: Jelaskan bahwa pengguna bisa memulainya dari Akun Demo atau Akun Real (Standard / Cent).
+PILIHAN MASTER COPYTRADE DI PAGE MASTER AI
+Di platform kami tersedia pilihan Master CopyTrade berikut:
 
-2. MENGARAHKAN USER KE COPYTRADE (ALUR LOGIN TRADER):
-   - Jika pengguna bertanya ingin bergabung, mendaftar, atau meminta link CopyTrade / Master Copy, Anda WAJIB menjelaskan alurnya:
-     "Untuk bergabung dengan Spilla Gold Master Copy, Anda perlu melewati halaman Verifikasi Akun Trader terlebih dahulu."
-   - Jelaskan bahwa mereka harus memasukkan:
-     1. Nama / Username
-     2. Nomor Akun Trader (MT5)
-     3. Password Investor / Password Akun Trader
-     4. Server Broker
-   - Setelah mengisi form login trader tersebut, sistem akan secara otomatis mengarahkan (redirect) pengguna ke Link CopyTrade Follower.
+1. ♾️ SPILLA INFINITY (PREMIUM MASTER COPY TRADE)
+   - Modal Minimum: $1,000
+   - Bagi Hasil: 70% Investor : 30% Master
+   - Akses: Lifetime (S&K)
+   - Keunggulan: Kapasitas modal mulai $1,000, Sistem Copy Trade otomatis, Akses lifetime, Investor menggunakan akun trading sendiri, Transaksi Master diikuti secara otomatis, Dipantau via platform copy trade.
+   - Link Follow: https://social.aimsxchange.com/portal/registration/subscription/82085/spilla123
 
-3. MENYEDIAKAN LINK COMMUNITY:
-   - Selalu berikan pautan channel resmi Telegram jika pengguna ingin melihat laporan / report harian:
-     👉 Channel Telegram Official: https://t.me/xauusdreport
+2. 🥇 SPILLA SCOUT ($50, Bagi Hasil 70:30)
+3. 🥈 SPILLA ELITE ($100, Bagi Hasil 70:30)
+4. 🥉 SPILLA HUNTER ($250, Bagi Hasil 70:30)
+5. ⚡ SPILLA STRIKER ($500+, Bagi Hasil 70:30)
+
+DISCLAIMER:
+Trading memiliki risiko. Profit tidak dijamin dan kerugian dapat terjadi. Hasil pada setiap akun dapat berbeda tergantung kondisi pasar, pengaturan copy trade, dan faktor lainnya.
 
 ---
-TONE & STYLE BAHASA
-- Profesional, ramah, sopan, dan terpercaya.
-- Gunakan format teks yang rapi (bold, emoji secukupnya, bullet points).
-- DILARANG memberikan janji keuntungan pasti (fixed profit). Selalu tekankan pentingnya konsistensi dan manajemen risiko.`;
+ALUR AKSES LINK FOLLOWER / LINK CT
+Sebelum pengguna masuk ke link follower / link CT (seperti link Spilla Infinity), alurnya adalah:
+1. Pengguna wajib masuk ke halaman/form Login Akun Trader terlebih dahulu.
+2. Pengguna menginput:
+   - Username / Nama
+   - Nomor Akun Trader (MT5/MT4)
+   - Password Akun Trader
+   - Server Broker
+3. Hasil login tersimpan secara otomatis ke Database Admin pada Dashboard Admin (pada tab khusus data login akun trader).
+4. Setelah submit/login selesai, sistem secara otomatis mengarahkan (redirect) pengguna ke Link Follower / Link CT Spilla Infinity.
+
+---
+TAHAP INTERAKSI CHATBOT ASSISTANT
+- Jika pengguna bertanya tentang informasi, berikan bantuan/penjelasan singkat dan arahkan ke link Telegram resmi: https://t.me/xauusdreport
+- Jika pengguna meminta link CopyTrade / Spilla Infinity, jelaskan pilihan Spilla Infinity dan infokan bahwa mereka harus melewati halaman Login Akun Trader terlebih dahulu sebelum di-redirect ke link tersebut.
+- Tone & Style: Profesional, ramah, jujur, sopan, dan transparan. DILARANG memberikan janji fixed profit.`;
 
     const aiClient = this.getGenAI();
 
@@ -106,21 +116,21 @@ TONE & STYLE BAHASA
   private getFallbackReply(userMessage: string): { reply: string; showVerificationForm?: boolean } {
     const lower = userMessage.toLowerCase();
 
-    if (lower.includes('copytrade') || lower.includes('ikutan') || lower.includes('daftar') || lower.includes('join') || lower.includes('cara')) {
+    if (lower.includes('infinity') || lower.includes('spilla infinity') || lower.includes('copytrade') || lower.includes('ikutan') || lower.includes('daftar') || lower.includes('join') || lower.includes('cara')) {
       return {
-        reply: `Halo! Terima kasih atas ketertarikan Anda untuk bergabung dengan **Spilla Gold - Master Copy** (Smart • Stable • Consistent) 🚀\n\nUntuk mulai mengikuti *CopyTrade*, silakan ikuti langkah berikut:\n\n1️⃣ Masuk ke halaman **Login Akun Trader** kami.\n2️⃣ Masukkan data akun trading Anda (Nama, Nomor Akun MT5, Password Akun/Investor, & Server Broker).\n3️⃣ Klik tombol **"Lanjutkan ke Link CopyTrade"**.\n4️⃣ Setelah data terverifikasi, Anda akan langsung di-redirect ke halaman **Master CopyTrade (Follower Link)**.\n\nSambil menunggu, Anda juga bisa memantau laporan trading harian kami di Channel Telegram Resmi:\n👉 https://t.me/xauusdreport\n\nAda yang ingin Anda tanyakan lagi seputar Spilla Gold?`,
+        reply: `Halo! Terima kasih atas ketertarikan Anda bergabung dengan **SPILLA GOLD - MASTER COPY** (Smart • Stable • Consistent) 🚀\n\n♾️ **SPILLA INFINITY - PREMIUM MASTER COPY TRADE**\nDetail Master:\n• Modal Minimum: $1,000\n• Bagi Hasil: 70% Investor : 30% Master\n• Akses: Lifetime (S&K)\n• Keunggulan: Otomatisasi Copy Trade, Investor menggunakan akun sendiri, Transaksi diikuti otomatis & real-time.\n• Link Direct Follow: https://social.aimsxchange.com/portal/registration/subscription/82085/spilla123\n\n📌 **ALUR AKSES COPYTRADE:**\n1️⃣ Masuk ke form **Login Akun Trader**.\n2️⃣ Input Username/Nama, Nomor Akun Trader, Password Akun Trader, dan Server Broker.\n3️⃣ Setelah data tersimpan, sistem akan secara otomatis mengarahkan (redirect) Anda ke **Link Follower CopyTrade**.\n\nSambil menunggu, pantau laporan trading harian di Channel Telegram Resmi kami:\n👉 https://t.me/xauusdreport`,
         showVerificationForm: true,
       };
     }
 
     if (lower.includes('telegram') || lower.includes('channel') || lower.includes('report') || lower.includes('laporan')) {
       return {
-        reply: `Dapatkan update laporan transaksi harian, analisis teknikal, dan sinyal presisi XAUUSD secara real-time melalui Channel Telegram Resmi kami:\n\n👉 **Official Telegram Channel**: https://t.me/xauusdreport\n\nBergabung sekarang untuk mendapatkan wawasan langsung dari tim kuantitatif Spilla Gold! ⚡`,
+        reply: `Dapatkan update laporan transaksi harian, analisis teknikal, dan sinyal presisi XAUUSD secara real-time melalui Channel Telegram Resmi SPILLA GOLD:\n\n👉 **Official Telegram Channel**: https://t.me/xauusdreport\n\nBergabung sekarang untuk mendapatkan wawasan langsung dari tim kuantitatif Spilla Gold! ⚡`,
       };
     }
 
     return {
-      reply: `Halo! Selamat datang di **SPILLA GOLD - MASTER COPY** (Smart • Stable • Consistent) ⚡\n\nSaya adalah AI Assistant resmi Spilla Gold. Saya dapat membantu Anda tentang:\n• Informi seputar strategi trading **XAUUSD (Emas)** dengan AI & Risk Management.\n• Panduan penggunaan **Akun Demo / Real (Standard & Cent)**.\n• Alur pendaftaran **CopyTrade Master Copy**.\n• Laporan harian di Channel Telegram Resmi: https://t.me/xauusdreport\n\nAda yang bisa saya bantu hari ini?`,
+      reply: `Halo! Selamat datang di **SPILLA GOLD - MASTER COPY** (Smart • Stable • Consistent) ⚡\n\nSaya adalah AI Assistant resmi Spilla Gold. Saya dapat membantu Anda tentang:\n• Pilihan Master CopyTrade (Termasuk **SPILLA INFINITY** $1,000+).\n• Informasi strategi trading XAUUSD (Emas).\n• Alur Login Akun Trader sebelum redirect ke Link Follower CT.\n• Laporan harian di Official Telegram Channel: https://t.me/xauusdreport\n\nAda yang bisa saya bantu hari ini?`,
     };
   }
 }

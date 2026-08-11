@@ -179,6 +179,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
   const filteredTraderLogins = traderLogins.filter((t) => {
     const matchesSearch =
       t.identifier.toLowerCase().includes(traderSearchQuery.toLowerCase()) ||
+      (t.accountNumber && t.accountNumber.toLowerCase().includes(traderSearchQuery.toLowerCase())) ||
       t.selectedMaster.toLowerCase().includes(traderSearchQuery.toLowerCase());
     const matchesMaster =
       traderFilterMaster === 'ALL' || t.selectedMaster === traderFilterMaster;
@@ -194,12 +195,14 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
 
     // CSV Header with BOM for proper Excel UTF-8 encoding
     let csv = '\uFEFF';
-    csv += 'No,Email / Username,Tanggal Login,Jam Login,Status Login,Master Dipilih\n';
+    csv += 'No,Username / Nama,Nomor Akun Trader,Server Broker,Tanggal Login,Jam Login,Status Login,Master Dipilih\n';
 
     filteredTraderLogins.forEach((item, index) => {
       const row = [
         index + 1,
         `"${item.identifier}"`,
+        `"${item.accountNumber || '-'}"`,
+        `"${item.brokerServer || 'AIMS-Live'}"`,
         `"${item.loginDate}"`,
         `"${item.loginTime}"`,
         `"${item.status}"`,
@@ -598,6 +601,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                   className="bg-gray-900 border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#E5B842]"
                 >
                   <option value="ALL">Semua Master</option>
+                  <option value="SPILLA INFINITY">SPILLA INFINITY</option>
                   <option value="SPILLA SCOUT">SPILLA SCOUT</option>
                   <option value="SPILLA ELITE">SPILLA ELITE</option>
                   <option value="SPILLA HUNTER">SPILLA HUNTER</option>
@@ -629,8 +633,10 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-gray-900/60 border-b border-gray-800 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
-                    <th className="py-3.5 px-4 w-16">No</th>
-                    <th className="py-3.5 px-4">Email / Username</th>
+                    <th className="py-3.5 px-4 w-12">No</th>
+                    <th className="py-3.5 px-4">Username / Nama</th>
+                    <th className="py-3.5 px-4">No. Akun Trader</th>
+                    <th className="py-3.5 px-4">Server Broker</th>
                     <th className="py-3.5 px-4">Tanggal Login</th>
                     <th className="py-3.5 px-4">Jam Login</th>
                     <th className="py-3.5 px-4">Status</th>
@@ -640,7 +646,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                 <tbody className="divide-y divide-gray-800/60 text-xs">
                   {loading ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-gray-400">
+                      <td colSpan={8} className="py-12 text-center text-gray-400">
                         <div className="flex flex-col items-center justify-center gap-2">
                           <div className="w-6 h-6 border-2 border-[#E5B842] border-t-transparent rounded-full animate-spin text-[#E5B842]" />
                           <span>Memuat aktivitas login trader...</span>
@@ -649,7 +655,7 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                     </tr>
                   ) : filteredTraderLogins.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-gray-500">
+                      <td colSpan={8} className="py-12 text-center text-gray-500">
                         Belum ada data login akun trader.
                       </td>
                     </tr>
@@ -661,6 +667,12 @@ export const AdminDashboardView: React.FC<AdminDashboardViewProps> = ({
                         </td>
                         <td className="py-3.5 px-4 text-white font-medium font-mono">
                           {item.identifier}
+                        </td>
+                        <td className="py-3.5 px-4 text-amber-300 font-bold font-mono">
+                          {item.accountNumber || '-'}
+                        </td>
+                        <td className="py-3.5 px-4 text-cyan-400 font-mono">
+                          {item.brokerServer || 'AIMS-Live'}
                         </td>
                         <td className="py-3.5 px-4 text-gray-300 font-mono">
                           {item.loginDate}

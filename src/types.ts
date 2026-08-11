@@ -1,6 +1,8 @@
 export interface TraderLoginRecord {
   id: string;
   identifier: string;
+  accountNumber?: string;
+  brokerServer?: string;
   loginDate: string;
   loginTime: string;
   status: 'SUCCESS' | 'FAILED';

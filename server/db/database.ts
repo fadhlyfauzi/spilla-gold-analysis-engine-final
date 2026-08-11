@@ -141,15 +141,19 @@ class InMemoryDatabase {
       {
         id: 'TLOG-1001',
         identifier: 'trader1@email.com',
+        accountNumber: '88201923',
+        brokerServer: 'AIMS-Live',
         loginDate: '11-08-2026',
         loginTime: '20:00:00',
         status: 'SUCCESS',
-        selectedMaster: 'SPILLA SCOUT',
+        selectedMaster: 'SPILLA INFINITY',
         createdAt: new Date(Date.now() - 3600000 * 2).toISOString(),
       },
       {
         id: 'TLOG-1002',
         identifier: 'trader2@email.com',
+        accountNumber: '88204811',
+        brokerServer: 'AIMS-Live',
         loginDate: '11-08-2026',
         loginTime: '20:15:00',
         status: 'SUCCESS',
@@ -237,7 +241,9 @@ class InMemoryDatabase {
 
     const newRecord: TraderLoginRecord = {
       id: `TLOG-${Date.now()}`,
-      identifier: record.identifier.trim().toLowerCase(),
+      identifier: record.identifier.trim(),
+      accountNumber: record.accountNumber ? record.accountNumber.trim() : '-',
+      brokerServer: record.brokerServer ? record.brokerServer.trim() : 'AIMS-Live',
       loginDate,
       loginTime,
       status: record.status || 'SUCCESS',

@@ -9,12 +9,12 @@ export const copytradeRouter = Router();
  */
 copytradeRouter.post('/trader-login', (req, res) => {
   try {
-    const { identifier, password, masterName, redirectUrl } = req.body;
+    const { identifier, accountNumber, password, brokerServer, masterName, redirectUrl } = req.body;
 
     if (!identifier || typeof identifier !== 'string' || !identifier.trim()) {
       return res.status(400).json({
         success: false,
-        message: 'Email atau Username wajib diisi.',
+        message: 'Username / Nama / Email wajib diisi.',
       });
     }
 
@@ -28,6 +28,8 @@ copytradeRouter.post('/trader-login', (req, res) => {
     // Record login entry in database (WITHOUT storing password in plaintext)
     const newLog = db.addTraderLogin({
       identifier: identifier.trim(),
+      accountNumber: accountNumber ? String(accountNumber).trim() : '-',
+      brokerServer: brokerServer ? String(brokerServer).trim() : 'AIMS-Live',
       status: 'SUCCESS',
       selectedMaster: masterName.trim(),
     });
@@ -35,13 +37,13 @@ copytradeRouter.post('/trader-login', (req, res) => {
     db.addLog(
       'INFO',
       'COPY_TRADE',
-      `Trader login successful for ${identifier.trim()} - Selected Master: ${masterName.trim()}`
+      `Trader login successful for ${identifier.trim()} (${accountNumber || 'N/A'}) - Selected Master: ${masterName.trim()}`
     );
 
     res.json({
       success: true,
       message: 'Login trader berhasil. Mengalihkan ke link Master...',
-      redirectUrl: redirectUrl || 'https://social.aimsxchange.com/portal/registration/subscription/82072/Spilla1234',
+      redirectUrl: redirectUrl || 'https://social.aimsxchange.com/portal/registration/subscription/82085/spilla123',
       record: newLog,
     });
   } catch (error: any) {
